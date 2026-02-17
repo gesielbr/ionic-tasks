@@ -26,6 +26,7 @@ import {
   DemonSlayerCharacter,
   PagedResponse,
 } from './models/anime-character.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-characters',
@@ -80,6 +81,7 @@ export class CharactersPage implements OnInit {
   }
 
   loadCharacters(reset = false, infiniteEv?: InfiniteScrollCustomEvent) {
+    console.log('API base:', environment.dsApiBase);
     if (this.initialLoading || this.loadingMore) return;
 
     if (reset) {
@@ -94,7 +96,15 @@ export class CharactersPage implements OnInit {
 
     this.charactersService.getCharacters(this.page, this.limit).subscribe({
       next: (res: PagedResponse<DemonSlayerCharacter>) => {
-        const list = res?.content ?? [];
+        if (!res || !Array.isArray(res.content)) {
+          this.errorMsg = 'Resposta inválida da API (não veio JSON esperado).';
+          this.initialLoading = false;
+          this.loadingMore = false;
+          infiniteEv?.target?.complete?.();
+          return;
+        }
+
+        const list = res.content;
 
         this.characters = [...this.characters, ...list];
         this.page += 1;
@@ -103,6 +113,7 @@ export class CharactersPage implements OnInit {
           this.infiniteDisabled = true;
         }
       },
+
       error: () => {
         this.errorMsg = 'Falha ao carregar personagens. Tenta novamente.';
         this.initialLoading = false;
