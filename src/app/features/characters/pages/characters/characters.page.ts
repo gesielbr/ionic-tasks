@@ -26,7 +26,6 @@ import {
   DemonSlayerCharacter,
   PagedResponse,
 } from './models/anime-character.model';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-characters',
@@ -81,7 +80,6 @@ export class CharactersPage implements OnInit {
   }
 
   loadCharacters(reset = false, infiniteEv?: InfiniteScrollCustomEvent) {
-    console.log('API base:', environment.dsApiBase);
     if (this.initialLoading || this.loadingMore) return;
 
     if (reset) {

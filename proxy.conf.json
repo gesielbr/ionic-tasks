@@ -1,9 +1,11 @@
 {
-  "/ds-api": {
+  "/api/ds": {
     "target": "https://www.demonslayer-api.com",
     "secure": true,
     "changeOrigin": true,
     "logLevel": "debug",
-    "pathRewrite": { "^/ds-api": "" }
+    "pathRewrite": {
+      "^/api/ds": ""
+    }
   }
 }
