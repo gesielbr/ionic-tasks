@@ -1,0 +1,336 @@
+/* =========================================================
+   🎨 Demon Slayer x Crunchyroll Theme (Premium)
+   - fundo dark com neon
+   - cards glass + borda colorida
+   - imagem com glow (sem “cemitério”)
+========================================================= */
+
+:host {
+  /* Crunchyroll / Demon Slayer palette */
+  --cr-orange: #f47521;
+  --cr-dark: #0b0f14;
+  --ds-teal: #2dd4bf;
+  --ds-pink: #fb7185;
+  --ds-purple: #a78bfa;
+  --ds-ink: #0f172a;
+  --glass: rgba(255, 255, 255, 0.08);
+  --glass-strong: rgba(255, 255, 255, 0.12);
+}
+
+/* =============== Fundo geral =============== */
+ion-content {
+  --background: transparent;
+  background:
+    radial-gradient(
+      900px 450px at 10% 0%,
+      rgba(45, 212, 191, 0.18),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 450px at 90% 10%,
+      rgba(251, 113, 133, 0.16),
+      transparent 62%
+    ),
+    radial-gradient(
+      900px 450px at 60% 100%,
+      rgba(167, 139, 250, 0.14),
+      transparent 60%
+    ),
+    linear-gradient(180deg, var(--cr-dark) 0%, var(--ds-ink) 100%);
+}
+
+/* =============== Toolbar =============== */
+ion-toolbar {
+  --background: rgba(11, 15, 20, 0.65);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+ion-title {
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.2px;
+}
+
+/* =============== Card =============== */
+.character-card {
+  overflow: hidden;
+  border-radius: 18px;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.06)
+  );
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  /* borda “anime” */
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(244, 117, 33, 0.14);
+
+  &:hover {
+    transform: translateY(-7px);
+    border-color: rgba(244, 117, 33, 0.35);
+    box-shadow:
+      0 18px 45px rgba(0, 0, 0, 0.55),
+      0 0 0 1px rgba(244, 117, 33, 0.22),
+      0 0 28px rgba(244, 117, 33, 0.18);
+  }
+}
+
+/* =============== Imagem (glow + fundo “anime”) =============== */
+.character-img {
+  width: 100%;
+  height: 260px;
+  display: block;
+  object-fit: contain;
+  padding: 18px;
+
+  /* fundo com “energia” (some com o cemitério) */
+  background:
+    radial-gradient(
+      140px 140px at 30% 20%,
+      rgba(45, 212, 191, 0.22),
+      transparent 60%
+    ),
+    radial-gradient(
+      140px 140px at 70% 30%,
+      rgba(251, 113, 133, 0.18),
+      transparent 60%
+    ),
+    radial-gradient(
+      180px 160px at 50% 90%,
+      rgba(167, 139, 250, 0.16),
+      transparent 65%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.03)
+    );
+
+  /* glow na arte */
+  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.35))
+    drop-shadow(0 0 18px rgba(45, 212, 191, 0.15))
+    drop-shadow(0 0 18px rgba(244, 117, 33, 0.1));
+}
+
+/* se você estiver usando <ion-img>, garante comportamento similar */
+ion-img {
+  height: 260px;
+  object-fit: contain;
+}
+
+/* =============== Textos =============== */
+ion-card-title,
+h2 {
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 800;
+}
+
+ion-card-subtitle,
+small {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+/* descrição cortada em 3 linhas */
+.desc {
+  color: rgba(255, 255, 255, 0.7);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* quote mais “anime” */
+.quote {
+  font-size: 0.85rem;
+  opacity: 0.75;
+  margin-bottom: 10px;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* =============== Badge (Crunchyroll vibe) =============== */
+ion-badge {
+  --background: linear-gradient(
+    90deg,
+    rgba(244, 117, 33, 0.95),
+    rgba(251, 113, 133, 0.9)
+  );
+  --color: #0b0f14;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 8px 18px rgba(244, 117, 33, 0.2);
+}
+
+/* =============== Espaçamento do grid (se estiver usando) =============== */
+ion-col {
+  padding: 10px;
+}
+
+/* ========================================
+   🌸 BACKGROUND DA PÁGINA
+======================================== */
+
+ion-content {
+  --background: linear-gradient(180deg, #fafafa 0%, #f3f4f7 40%, #eceef3 100%);
+}
+
+/* ========================================
+   🔥 TOOLBAR ESTILO DEMON SLAYER
+======================================== */
+
+ion-toolbar {
+  --background: linear-gradient(90deg, #ff6b00, #ff8c42);
+  --color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ========================================
+   🎴 CARD BASE
+======================================== */
+
+.character-card {
+  overflow: hidden;
+  border-radius: 18px;
+  background: #ffffff;
+
+  transition: all 0.25s ease;
+
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+
+  &:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow:
+      0 10px 22px rgba(0, 0, 0, 0.12),
+      0 0 12px rgba(255, 107, 0, 0.15);
+  }
+}
+
+/* ========================================
+   🖼️ IMAGEM DO PERSONAGEM
+======================================== */
+
+.character-img {
+  width: 100%;
+  height: 260px;
+  display: block;
+
+  object-fit: contain;
+
+  /* 🌸 fundo anime claro elegante */
+  background:
+    radial-gradient(circle at top, rgba(255, 107, 0, 0.08), transparent 70%),
+    linear-gradient(180deg, #ffffff 0%, #f5f6fa 100%);
+
+  padding: 16px;
+}
+
+/* ========================================
+   ✨ HEADER DO CARD
+======================================== */
+
+ion-card-header {
+  padding-bottom: 6px;
+}
+
+ion-card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1e1e1e;
+}
+
+ion-card-subtitle {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #ff6b00; /* 🔥 toque Crunchyroll */
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+/* ========================================
+   📄 DESCRIÇÃO
+======================================== */
+
+.desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* limita em 3 linhas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: #555;
+}
+
+/* ========================================
+   🗨️ QUOTE (se usar depois)
+======================================== */
+
+.quote {
+  font-size: 0.82rem;
+  opacity: 0.8;
+  margin-top: 8px;
+  font-style: italic;
+  color: #666;
+}
+
+/* ========================================
+   📱 RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 768px) {
+  .character-img {
+    height: 220px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .character-img {
+    height: 280px;
+  }
+}
+
+/* Badge base */
+.affiliation-badge {
+  margin-top: 6px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
+/* 🟢 Demon Slayer Corps — verde jade */
+.affiliation-corps {
+  background: rgba(34, 197, 94, 0.12);
+  color: #16a34a;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+/* 🔵 Hashira — azul água */
+.affiliation-hashira {
+  background: rgba(59, 130, 246, 0.12);
+  color: #2563eb;
+  border: 1px solid rgba(59, 130, 246, 0.35);
+}
+
+/* 🔴 Demon — vermelho nichirin */
+.affiliation-demon {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+/* ⚪ Unknown */
+.affiliation-unknown {
+  background: rgba(148, 163, 184, 0.12);
+  color: #64748b;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
