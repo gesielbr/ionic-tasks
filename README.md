@@ -1,329 +1,463 @@
-enterprise
+# 🗡️ Demon Slayer Characters Browser
 
-🇺🇸 EN — Updated Project Documentation
-Architecture
+> Enterprise Angular + Ionic — Scalable frontend architecture with real-world API integration patterns.
 
-Angular Standalone Components
+![Angular](https://img.shields.io/badge/Angular-Standalone-DD0031?style=flat-square&logo=angular)
+![Ionic](https://img.shields.io/badge/Ionic-UI-3880FF?style=flat-square&logo=ionic)
+![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6?style=flat-square&logo=typescript)
+![Architecture](https://img.shields.io/badge/Architecture-Feature--based-green?style=flat-square)
 
-Ionic Angular
+---
 
-Feature-based Lazy Loading
+## 📌 Overview
 
-Domain-driven structure
+A scalable **Demon Slayer Characters Browser** demonstrating real-world frontend patterns:
 
-Routing Evolution
+- External API consumption with CORS-safe local proxy
+- Ionic UI with infinite scroll pagination
+- Enterprise Angular standalone architecture
+- Lazy-loaded feature modules with domain-driven structure
 
-Before:
+---
 
-loadComponent(...)
+## 🧱 Architecture
 
-After (enterprise pattern):
+Feature-based, domain-driven folder structure:
 
-loadChildren(...)
-
-Benefits:
-
-Feature encapsulation
-
-Cleaner root routing
-
-True lazy loading
-
-Demon Slayer API Integration
-
-Real response format:
-
-pagination + content[]
-
-Not data[].
-
-Local Proxy Setup
-
-Prefix used:
-
-/ds-api
-
-Rewritten to:
-
-https://www.demonslayer-api.com
-
-Rule:
-
-If request returns HTML → proxy not applied.
-
-Issues Solved
-
-Wrong baseUrl with query params
-
-HTML response instead of JSON
-
-Incorrect model typing
-
-Template using non-existent properties
-
-API uses query params instead of REST path
-
-Future Improvement
-
-Adapter Layer planned:
-
-API → Adapter → UI
-
-Decoupling frontend from external API structure.
-
-Project Goal
-
-Build a scalable Demon Slayer Characters Browser using:
-
-External API consumption
-
-Ionic UI
-
-Standalone Angular architecture
-
-Enterprise-ready patterns
-
-🇧🇷 PT-BR — Documentação Atualizada do Projeto
-🧱 Arquitetura escolhida
-
-Este projeto utiliza:
-
-Angular Standalone Components
-
-Ionic Angular
-
-Lazy Loading por Feature
-
-Organização por domínio (features/)
-
-Estrutura principal:
-
+```
 src/app
 ├── features/
-│ └── characters/
-│ ├── data/
-│ ├── models/
-│ ├── pages/
-│ └── characters.routes.ts
+│   └── characters/
+│       ├── data/
+│       ├── models/
+│       ├── pages/
+│       └── characters.routes.ts
 └── app.routes.ts
-🔄 Evolução das Rotas
-Antes (forma simples)
-loadComponent: () =>
-import('./features/characters/pages/characters/characters.page')
-.then(m => m.CharactersPage)
-Problema
+```
 
-app.routes.ts cresce demais.
+### Routing — Enterprise Pattern
 
-Baixa escalabilidade em projetos grandes.
-
-✅ Depois (padrão empresa)
+```typescript
+// ✅ After (enterprise lazy loading)
 {
-path: 'characters',
-loadChildren: () =>
-import('./features/characters/characters.routes')
-.then(m => m.CHARACTERS_ROUTES),
+  path: 'characters',
+  loadChildren: () =>
+    import('./features/characters/characters.routes')
+      .then(m => m.CHARACTERS_ROUTES),
 }
+```
 
-Arquivo da feature:
+**Benefits:** feature encapsulation · cleaner root routing · true lazy loading · better scalability
 
-export const CHARACTERS_ROUTES: Routes = [
-{ path: '', component: CharactersPage }
-];
-Benefícios
+---
 
-Encapsulamento por feature
+## 🌐 API Integration
 
-Lazy loading real
+**Base URL:** `https://www.demonslayer-api.com/api/v1`
 
-Estrutura escalável
+**Endpoint used:** `/characters?page=1&limit=6`
 
-🌐 Consumo da Demon Slayer API
+### ⚠️ Real API Response Format
 
-API base:
-
-https://www.demonslayer-api.com/api/v1
-
-Endpoint usado:
-
-/characters?page=1&limit=5
-⚠️ Importante — Formato REAL da API
-
-A API retorna:
-
+```json
 {
-pagination: {},
-content: []
+  "pagination": {},
+  "content": []
 }
+```
 
-E NÃO:
+> The API returns `content`, **not** `data`. The service reads `res.content` accordingly.
 
-data: []
+---
 
-Por isso o código usa:
+## 🔁 Infinite Scroll
 
-res.content
-🔁 Proxy Local (evitar CORS)
+Implemented with `ion-infinite-scroll`, splitting state into:
 
-Arquivo:
+| State            | Purpose               |
+| ---------------- | --------------------- |
+| `initialLoading` | First page load       |
+| `loadingMore`    | Subsequent pagination |
 
-proxy.conf.json
+Stops automatically when the API returns fewer items than the configured `limit`. No DOM teardown, no scroll reset.
 
-Configuração:
+---
 
+## 🔁 Local Proxy Setup
+
+Configured to avoid CORS issues during local development.
+
+**`proxy.conf.json`**
+
+```json
 {
-"/ds-api": {
-"target": "https://www.demonslayer-api.com",
-"secure": true,
-"changeOrigin": true,
-"logLevel": "debug",
-"pathRewrite": {
-"^/ds-api": ""
+  "/ds-api": {
+    "target": "https://www.demonslayer-api.com",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/ds-api": ""
+    }
+  }
 }
-}
-}
+```
 
-Uso no service:
+**Service baseUrl:**
 
+```typescript
 private readonly baseUrl = '/ds-api/api/v1/characters';
-💡 Como validar
+```
 
-Abrir no navegador:
+**Validate the proxy is working:**
 
+```
 http://localhost:8100/ds-api/api/v1/characters?page=1&limit=5
+```
 
-Se retornar JSON → proxy funcionando.
+- ✅ Returns JSON → Proxy working
+- ❌ Returns HTML → Proxy not applied
 
-Se retornar HTML → proxy não aplicado.
+---
 
-⚠️ Problemas Encontrados e Soluções
-1️⃣ API retornava HTML em vez de JSON
+## ⚠️ Issues Solved During Development
 
-Sintoma:
+### 1. HTML response instead of JSON
 
-<!DOCTYPE html>
+**Cause:** proxy disabled or wrong URL  
+**Fix:** correct `baseUrl` + run Ionic with proxy enabled
 
-Causa:
+### 2. Wrong `baseUrl` with query params
 
-Proxy não ativo
+```typescript
+// ❌ Bad
+`${baseUrl}?page=1`;
 
-URL inválida
+// ✅ Correct
+baseUrl + HttpParams;
+```
 
-Solução:
+### 3. Incorrect model typing
 
-Corrigir baseUrl
+| Old (wrong)      | Real API        |
+| ---------------- | --------------- |
+| `character.name` | `name`          |
+| `favorites`      | `img`           |
+| `role`           | `race`, `quote` |
 
-Garantir ionic serve com proxy
+Interfaces updated to reflect the actual API response.
 
-2️⃣ URL duplicada
+### 4. Template errors (`TS7053`)
 
-Erro comum:
+```typescript
+// ❌ Before
+c["character"]?.name;
 
-/characters?page=1&limit=5/characters&page=1&limit=5
+// ✅ After
+c.name;
+```
 
-Causa:
+### 5. Non-REST ID pattern
 
-Query string dentro da baseUrl.
-
-Regra adotada:
-
-baseUrl SEM query
-HttpParams COM query
-3️⃣ Estrutura do Model incorreta
-
-Antes:
-
-character.name
-favorites
-role
-
-Depois (real da API):
-
-name
-img
-race
-quote
-
-Angular acusou:
-
-TS7053 Property does not exist
-
-Solução:
-
-Atualizar interface DemonSlayerCharacter.
-
-4️⃣ Template quebrando (TS7053)
-
-Problema:
-
-c['character']?.name
-
-Correção:
-
-c.name
-c.img
-5️⃣ Endpoint com ID diferente do padrão REST
-
-A API NÃO usa:
-
+```
+// ❌ REST assumption
 /characters/1
 
-Ela usa:
-
+// ✅ Actual API pattern
 /characters?id=1
+```
 
-Service ajustado para HttpParams.
+Service adapted using `HttpParams`.
 
-🧠 Boas práticas definidas no projeto
+---
 
-✔ Nunca colocar query dentro do baseUrl
-✔ Sempre testar endpoint direto no browser
-✔ Se veio HTML → rota errada ou proxy falhou
-✔ Model deve refletir o JSON real
-✔ Service centraliza a lógica da API
+## 🧠 Enterprise Practices
 
-🚧 Próxima melhoria planejada
+- ✅ No query strings hardcoded inside `baseUrl`
+- ✅ Models reflect real API JSON structure
+- ✅ Feature routing encapsulation via `loadChildren`
+- ✅ Service layer abstraction for all API calls
+- ✅ Infinite scroll without DOM teardown
+- ✅ Standalone HTTP setup via `provideHttpClient()`
 
-Criar um Adapter Layer:
+---
 
-API → Adapter → App
+## 🌐 HTTP Setup (Standalone)
 
-Objetivo:
+```typescript
+// ✅ Used
+provideHttpClient();
 
-Converter content → data
+// ❌ Not used
+HttpClientModule;
+```
 
-Desacoplar UI do formato externo da API
+---
 
-⚠️ Problema adicional — Angular Cache EPERM (Windows)
+## 🚧 Planned — Adapter Layer
 
-Erro:
+```
+API Response → Adapter → Internal Contract → UI
+```
 
-EPERM: operation not permitted, rmdir .angular/cache
+**Goals:**
 
-Causa:
+- Decouple UI from external API format
+- Define stable internal contracts
+- Improve long-term scalability and testability
 
-Windows Defender / OneDrive
+---
 
-Solução:
+## 🚀 Getting Started
 
-rm -Recurse -Force .angular
-🌐 HTTP Setup (Standalone)
+```bash
+# Install dependencies
+npm install
 
-Uso de:
+# Run with proxy
+ionic serve --proxy-config proxy.conf.json
+```
 
-provideHttpClient()
+---
 
-Substituindo:
+## 🎯 Project Goals
 
-HttpClientModule
-🎯 Objetivo do Projeto
+Build a production-ready character browser demonstrating:
 
-Construir um navegador de personagens Demon Slayer com:
+- External API consumption with typed models
+- Ionic UI components (`ion-infinite-scroll`, etc.)
+- Enterprise Angular standalone architecture
+- Feature-based lazy loading
+- Real-world development patterns and solutions
 
-Consumo de API externa
+# 🗡️ Demon Slayer Characters Browser
 
-Estrutura Angular escalável
+> Enterprise Angular + Ionic — Arquitetura frontend escalável com padrões reais de integração com API.
 
-Lazy loading por feature
+![Angular](https://img.shields.io/badge/Angular-Standalone-DD0031?style=flat-square&logo=angular)
+![Ionic](https://img.shields.io/badge/Ionic-UI-3880FF?style=flat-square&logo=ionic)
+![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6?style=flat-square&logo=typescript)
+![Architecture](https://img.shields.io/badge/Arquitetura-Feature--based-green?style=flat-square)
 
-Base arquitetural próxima de projetos enterprise
+---
+
+## 📌 Visão Geral
+
+Um **Demon Slayer Characters Browser** escalável, demonstrando padrões reais de desenvolvimento frontend:
+
+- Consumo de API externa com proxy local seguro (CORS)
+- Ionic UI com paginação por infinite scroll
+- Arquitetura Angular standalone enterprise
+- Feature modules com lazy loading e estrutura orientada a domínio
+
+---
+
+## 🧱 Arquitetura
+
+Estrutura de pastas orientada a domínio e features:
+
+```
+src/app
+├── features/
+│   └── characters/
+│       ├── data/
+│       ├── models/
+│       ├── pages/
+│       └── characters.routes.ts
+└── app.routes.ts
+```
+
+### Rotas — Padrão Enterprise
+
+```typescript
+// ✅ Depois (lazy loading enterprise)
+{
+  path: 'characters',
+  loadChildren: () =>
+    import('./features/characters/characters.routes')
+      .then(m => m.CHARACTERS_ROUTES),
+}
+```
+
+**Benefícios:** encapsulamento de feature · rota raiz mais limpa · lazy loading real · melhor escalabilidade
+
+---
+
+## 🌐 Integração com a API
+
+**Base URL:** `https://www.demonslayer-api.com/api/v1`
+
+**Endpoint utilizado:** `/characters?page=1&limit=6`
+
+### ⚠️ Formato Real da Resposta
+
+```json
+{
+  "pagination": {},
+  "content": []
+}
+```
+
+> A API retorna `content`, **não** `data`. O service lê `res.content` corretamente.
+
+---
+
+## 🔁 Infinite Scroll
+
+Implementado com `ion-infinite-scroll`, separando os estados em:
+
+| Estado           | Finalidade            |
+| ---------------- | --------------------- |
+| `initialLoading` | Primeiro carregamento |
+| `loadingMore`    | Paginações seguintes  |
+
+Para automaticamente quando a API retorna menos itens do que o `limit` configurado. Sem teardown de DOM, sem reset de scroll.
+
+---
+
+## 🔁 Proxy Local
+
+Configurado para evitar problemas de CORS durante o desenvolvimento local.
+
+**`proxy.conf.json`**
+
+```json
+{
+  "/ds-api": {
+    "target": "https://www.demonslayer-api.com",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/ds-api": ""
+    }
+  }
+}
+```
+
+**`baseUrl` no service:**
+
+```typescript
+private readonly baseUrl = '/ds-api/api/v1/characters';
+```
+
+**Validar se o proxy está funcionando:**
+
+```
+http://localhost:8100/ds-api/api/v1/characters?page=1&limit=5
+```
+
+- ✅ Retorna JSON → Proxy funcionando
+- ❌ Retorna HTML → Proxy não aplicado
+
+---
+
+## ⚠️ Problemas Resolvidos Durante o Desenvolvimento
+
+### 1. Resposta HTML ao invés de JSON
+
+**Causa:** proxy desabilitado ou URL incorreta  
+**Solução:** corrigir o `baseUrl` + rodar o Ionic com proxy ativado
+
+### 2. `baseUrl` com query params concatenados
+
+```typescript
+// ❌ Errado
+`${baseUrl}?page=1`;
+
+// ✅ Correto
+baseUrl + HttpParams;
+```
+
+### 3. Tipagem do model incorreta
+
+| Antigo (errado)  | API real        |
+| ---------------- | --------------- |
+| `character.name` | `name`          |
+| `favorites`      | `img`           |
+| `role`           | `race`, `quote` |
+
+Interfaces atualizadas para refletir o JSON real da API.
+
+### 4. Erros de template (`TS7053`)
+
+```typescript
+// ❌ Antes
+c["character"]?.name;
+
+// ✅ Depois
+c.name;
+```
+
+### 5. Padrão de ID não-REST
+
+```
+// ❌ Suposição REST
+/characters/1
+
+// ✅ Padrão real da API
+/characters?id=1
+```
+
+Service adaptado usando `HttpParams`.
+
+---
+
+## 🧠 Boas Práticas Enterprise
+
+- ✅ Sem query strings hardcoded dentro do `baseUrl`
+- ✅ Models refletem a estrutura real do JSON da API
+- ✅ Encapsulamento de rotas por feature via `loadChildren`
+- ✅ Abstração de chamadas em camada de service
+- ✅ Infinite scroll sem teardown de DOM
+- ✅ HTTP standalone via `provideHttpClient()`
+
+---
+
+## 🌐 HTTP Setup (Standalone)
+
+```typescript
+// ✅ Utilizado
+provideHttpClient();
+
+// ❌ Não utilizado
+HttpClientModule;
+```
+
+---
+
+## 🚧 Próxima Evolução — Adapter Layer
+
+```
+Resposta da API → Adapter → Contrato Interno → UI
+```
+
+**Objetivos:**
+
+- Desacoplar a UI do formato externo da API
+- Definir contratos internos estáveis
+- Melhorar escalabilidade e testabilidade a longo prazo
+
+---
+
+## 🚀 Como Rodar
+
+```bash
+# Instalar dependências
+npm install
+
+# Rodar com proxy
+ionic serve --proxy-config proxy.conf.json
+```
+
+---
+
+## 🎯 Objetivos do Projeto
+
+Construir um browser de personagens pronto para produção, demonstrando:
+
+- Consumo de API externa com models tipados
+- Componentes Ionic UI (`ion-infinite-scroll`, etc.)
+- Arquitetura Angular standalone enterprise
+- Lazy loading orientado a features
+- Padrões e soluções reais de desenvolvimento

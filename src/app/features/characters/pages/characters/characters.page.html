@@ -5,29 +5,24 @@
 </ion-header>
 
 <ion-content>
-  <!-- Loading -->
-  <div *ngIf="loading" class="ion-text-center ion-padding">
+  @if (initialLoading && characters.length === 0) {
+  <div class="ion-text-center ion-padding">
     <ion-spinner name="crescent"></ion-spinner>
   </div>
-
-  <!-- Error -->
-  <div *ngIf="errorMsg" class="ion-text-center ion-padding">{{ errorMsg }}</div>
-
-  <!-- GRID DE CARDS -->
-  <ion-grid *ngIf="!loading && !errorMsg">
+  } @if (errorMsg) {
+  <div class="ion-text-center ion-padding">{{ errorMsg }}</div>
+  } @if (characters.length > 0) {
+  <ion-grid>
     <ion-row>
-      <ion-col
-        size="12"
-        size-md="4"
-        size-lg="4"
-        *ngFor="let c of characters; trackBy: trackById"
-      >
+      @for (c of characters; track c.id) {
+      <ion-col size="12" size-md="4" size-lg="4">
         <ion-card class="character-card" [ngClass]="getAffiliationCardClass(c)">
           <ion-img class="character-img" [src]="c.img" [alt]="c.name"></ion-img>
 
           <ion-card-header>
             <ion-card-title>{{ c.name }}</ion-card-title>
             <ion-card-subtitle>{{ c.race }}</ion-card-subtitle>
+
             <ion-badge
               class="affiliation-badge"
               [ngClass]="getAffiliationClass(c)"
@@ -41,6 +36,19 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
+      }
     </ion-row>
   </ion-grid>
+  }
+
+  <ion-infinite-scroll
+    threshold="150px"
+    (ionInfinite)="loadMore($event)"
+    [disabled]="infiniteDisabled"
+  >
+    <ion-infinite-scroll-content
+      loadingSpinner="crescent"
+      loadingText="Carregando mais personagens..."
+    ></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

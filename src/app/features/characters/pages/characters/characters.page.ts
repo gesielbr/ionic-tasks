@@ -6,11 +6,6 @@ import {
   IonTitle,
   IonContent,
   IonSpinner,
-  IonList,
-  IonItem,
-  IonAvatar,
-  IonImg,
-  IonLabel,
   IonBadge,
   IonGrid,
   IonRow,
@@ -20,7 +15,11 @@ import {
   IonCardTitle,
   IonCardSubtitle,
   IonCardContent,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
+  IonImg,
 } from '@ionic/angular/standalone';
+import { InfiniteScrollCustomEvent } from '@ionic/angular';
 
 import { CharactersService } from './data/characters-api.service';
 import {
@@ -38,11 +37,6 @@ import {
     IonTitle,
     IonContent,
     IonSpinner,
-    IonList,
-    IonItem,
-    IonAvatar,
-    IonImg,
-    IonLabel,
     IonBadge,
     IonGrid,
     IonRow,
@@ -52,6 +46,9 @@ import {
     IonCardTitle,
     IonCardSubtitle,
     IonCardContent,
+    IonInfiniteScroll,
+    IonInfiniteScrollContent,
+    IonImg,
   ],
   templateUrl: './characters.page.html',
   styleUrls: ['./characters.page.scss'],
@@ -61,16 +58,17 @@ export class CharactersPage implements OnInit {
 
   page = 1;
   limit = 6;
-  loading = false;
+
+  initialLoading = false;
+  loadingMore = false;
+  infiniteDisabled = false;
+
   errorMsg = '';
 
   constructor(private charactersService: CharactersService) {}
 
   ngOnInit() {
     this.loadCharacters(true);
-
-    // debug (depois remove)
-    this.charactersService.getCharacters(1, 5).subscribe(console.log);
   }
 
   trackById(_index: number, item: DemonSlayerCharacter) {
@@ -81,29 +79,46 @@ export class CharactersPage implements OnInit {
     return c.img || 'https://via.placeholder.com/80';
   }
 
-  loadCharacters(reset = false) {
-    if (this.loading) return;
+  loadCharacters(reset = false, infiniteEv?: InfiniteScrollCustomEvent) {
+    if (this.initialLoading || this.loadingMore) return;
 
     if (reset) {
       this.page = 1;
       this.characters = [];
       this.errorMsg = '';
+      this.infiniteDisabled = false;
+      this.initialLoading = true;
+    } else {
+      this.loadingMore = true;
     }
-
-    this.loading = true;
 
     this.charactersService.getCharacters(this.page, this.limit).subscribe({
       next: (res: PagedResponse<DemonSlayerCharacter>) => {
         const list = res?.content ?? [];
+
         this.characters = [...this.characters, ...list];
         this.page += 1;
-        this.loading = false;
+
+        if (list.length === 0 || list.length < this.limit) {
+          this.infiniteDisabled = true;
+        }
       },
       error: () => {
         this.errorMsg = 'Falha ao carregar personagens. Tenta novamente.';
-        this.loading = false;
+        this.initialLoading = false;
+        this.loadingMore = false;
+        infiniteEv?.target?.complete?.();
+      },
+      complete: () => {
+        this.initialLoading = false;
+        this.loadingMore = false;
+        infiniteEv?.target?.complete?.();
       },
     });
+  }
+
+  loadMore(ev: Event) {
+    this.loadCharacters(false, ev as InfiniteScrollCustomEvent);
   }
 
   getAffiliationLabel(c: any): string {
