@@ -131,4 +131,17 @@ export class CharactersPage implements OnInit {
         return 'affiliation-unknown';
     }
   }
+
+  getAffiliationCardClass(c: any): string {
+    switch (c.affiliation_id) {
+      case 1:
+        return 'affiliation-corps-card';
+      case 2:
+        return 'affiliation-hashira-card';
+      case 3:
+        return 'affiliation-demon-card';
+      default:
+        return 'affiliation-unknown-card';
+    }
+  }
 }

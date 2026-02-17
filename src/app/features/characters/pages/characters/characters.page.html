@@ -22,7 +22,7 @@
         size-lg="4"
         *ngFor="let c of characters; trackBy: trackById"
       >
-        <ion-card class="character-card">
+        <ion-card class="character-card" [ngClass]="getAffiliationCardClass(c)">
           <ion-img class="character-img" [src]="c.img" [alt]="c.name"></ion-img>
 
           <ion-card-header>

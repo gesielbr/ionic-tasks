@@ -1,336 +1,448 @@
-/* =========================================================
-   🎨 Demon Slayer x Crunchyroll Theme (Premium)
-   - fundo dark com neon
-   - cards glass + borda colorida
-   - imagem com glow (sem “cemitério”)
-========================================================= */
+/* =============================================
+   🌸 DEMON SLAYER × CRUNCHYROLL — VIVID LIGHT
+   Warm, alive, manga-inspired. Like the anime itself.
+============================================== */
 
-:host {
-  /* Crunchyroll / Demon Slayer palette */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Nunito:wght@400;600;700;800&display=swap");
+
+/* ─── CSS Variables ─────────────────────────── */
+:host ::ng-deep {
+  /* Crunchyroll */
   --cr-orange: #f47521;
-  --cr-dark: #0b0f14;
-  --ds-teal: #2dd4bf;
-  --ds-pink: #fb7185;
-  --ds-purple: #a78bfa;
-  --ds-ink: #0f172a;
-  --glass: rgba(255, 255, 255, 0.08);
-  --glass-strong: rgba(255, 255, 255, 0.12);
+  --cr-orange-light: #ff9a52;
+  --cr-orange-soft: rgba(244, 117, 33, 0.12);
+
+  /* Demon Slayer palette */
+  --ds-teal: #2a9d8f;
+  --ds-teal-light: #3dbfb0;
+  --ds-pink: #e8638c;
+  --ds-pink-light: #ff8fb1;
+  --ds-crimson: #c0392b;
+  --ds-navy: #2c3e7a;
+  --ds-gold: #e8a020;
+
+  /* Backgrounds */
+  --bg-page: #fdf6ee;
+  --bg-card: #ffffff;
+  --bg-card-hover: #fffcf9;
+
+  /* Text */
+  --text-title: #1a1209;
+  --text-body: #4a4035;
+  --text-muted: #8a7a6a;
+
+  /* Decorative */
+  --washi: #f5ede0;
+  --washi-dark: #ecdcc8;
 }
 
-/* =============== Fundo geral =============== */
+/* ─── PAGE BACKGROUND ────────────────────────── */
 ion-content {
-  --background: transparent;
-  background:
+  --background: var(--bg-page);
+  background-image:
     radial-gradient(
-      900px 450px at 10% 0%,
-      rgba(45, 212, 191, 0.18),
-      transparent 60%
+      circle at 15% 15%,
+      rgba(244, 117, 33, 0.07) 0%,
+      transparent 40%
     ),
     radial-gradient(
-      900px 450px at 90% 10%,
-      rgba(251, 113, 133, 0.16),
-      transparent 62%
+      circle at 85% 85%,
+      rgba(42, 157, 143, 0.07) 0%,
+      transparent 40%
     ),
     radial-gradient(
-      900px 450px at 60% 100%,
-      rgba(167, 139, 250, 0.14),
-      transparent 60%
+      circle at 85% 15%,
+      rgba(232, 99, 140, 0.05) 0%,
+      transparent 30%
     ),
-    linear-gradient(180deg, var(--cr-dark) 0%, var(--ds-ink) 100%);
+    linear-gradient(135deg, #fdf6ee 0%, #faf0e4 100%);
 }
 
-/* =============== Toolbar =============== */
+/* ─── TOOLBAR ─────────────────────────────────── */
 ion-toolbar {
-  --background: rgba(11, 15, 20, 0.65);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-ion-title {
-  color: rgba(255, 255, 255, 0.92);
-  letter-spacing: 0.2px;
-}
-
-/* =============== Card =============== */
-.character-card {
+  --background: transparent;
+  --color: #ffffff;
+  position: relative;
   overflow: hidden;
-  border-radius: 18px;
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 255, 255, 0.06)
-  );
-  backdrop-filter: blur(10px);
 
-  border: 1px solid rgba(255, 255, 255, 0.1);
-
-  /* borda “anime” */
-  box-shadow:
-    0 12px 30px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(244, 117, 33, 0.14);
-
-  &:hover {
-    transform: translateY(-7px);
-    border-color: rgba(244, 117, 33, 0.35);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      #e05a10 0%,
+      #f47521 35%,
+      #ff8c38 55%,
+      #f47521 75%,
+      #e05a10 100%
+    );
     box-shadow:
-      0 18px 45px rgba(0, 0, 0, 0.55),
-      0 0 0 1px rgba(244, 117, 33, 0.22),
-      0 0 28px rgba(244, 117, 33, 0.18);
+      0 3px 0 rgba(255, 255, 255, 0.25) inset,
+      0 4px 16px rgba(244, 117, 33, 0.4);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 12px,
+      rgba(255, 255, 255, 0.04) 12px,
+      rgba(255, 255, 255, 0.04) 24px
+    );
+    pointer-events: none;
+  }
+
+  ion-title {
+    font-family: "Cinzel", serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    position: relative;
+    color: #ffffff;
+    text-shadow:
+      0 1px 0 rgba(0, 0, 0, 0.2),
+      0 0 16px rgba(255, 200, 100, 0.5);
   }
 }
 
-/* =============== Imagem (glow + fundo “anime”) =============== */
+/* ─── GRID ───────────────────────────────────── */
+ion-grid {
+  padding: 20px 12px 48px;
+}
+ion-col {
+  padding: 10px;
+  animation: cardReveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+ion-col:nth-child(1) {
+  animation-delay: 0.04s;
+}
+ion-col:nth-child(2) {
+  animation-delay: 0.12s;
+}
+ion-col:nth-child(3) {
+  animation-delay: 0.2s;
+}
+ion-col:nth-child(4) {
+  animation-delay: 0.28s;
+}
+ion-col:nth-child(5) {
+  animation-delay: 0.36s;
+}
+ion-col:nth-child(6) {
+  animation-delay: 0.44s;
+}
+ion-col:nth-child(7) {
+  animation-delay: 0.52s;
+}
+ion-col:nth-child(8) {
+  animation-delay: 0.6s;
+}
+ion-col:nth-child(9) {
+  animation-delay: 0.68s;
+}
+
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ─── CARD BASE ───────────────────────────────── */
+.character-card {
+  --background: var(--bg-card);
+  background: var(--bg-card);
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 0;
+  position: relative;
+  border: 2px solid var(--washi-dark);
+  border-top: 4px solid var(--cr-orange);
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.9) inset,
+    0 6px 20px rgba(90, 60, 20, 0.1),
+    0 2px 6px rgba(90, 60, 20, 0.07);
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+  cursor: pointer;
+
+  /* Corner shimmer */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(
+      circle at top left,
+      rgba(255, 255, 255, 0.7) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 1;
+    border-radius: 20px 0 0 0;
+  }
+
+  &:hover {
+    transform: translateY(-9px) scale(1.02);
+    background: var(--bg-card-hover);
+    box-shadow:
+      0 2px 0 rgba(255, 255, 255, 0.9) inset,
+      0 18px 38px rgba(90, 60, 20, 0.16),
+      0 6px 12px rgba(90, 60, 20, 0.1);
+  }
+
+  &:active {
+    transform: translateY(-3px) scale(0.99);
+  }
+}
+
+/* ─── ACCENT PER AFFILIATION ─────────────────── */
+
+.character-card.affiliation-corps-card {
+  border-top-color: var(--ds-teal);
+  .character-img {
+    background:
+      radial-gradient(
+        circle at 50% 25%,
+        rgba(42, 157, 143, 0.18) 0%,
+        transparent 65%
+      ),
+      linear-gradient(180deg, #edf9f7 0%, #f7fffe 100%);
+  }
+  &:hover {
+    border-color: var(--ds-teal);
+    box-shadow:
+      0 2px 0 rgba(255, 255, 255, 0.9) inset,
+      0 18px 38px rgba(42, 157, 143, 0.18),
+      0 0 0 1px rgba(42, 157, 143, 0.3);
+  }
+}
+
+.character-card.affiliation-hashira-card {
+  border-top-color: var(--ds-navy);
+  .character-img {
+    background:
+      radial-gradient(
+        circle at 50% 25%,
+        rgba(44, 62, 122, 0.13) 0%,
+        transparent 65%
+      ),
+      linear-gradient(180deg, #edf0f9 0%, #f5f7ff 100%);
+  }
+  &:hover {
+    border-color: var(--ds-navy);
+    box-shadow:
+      0 2px 0 rgba(255, 255, 255, 0.9) inset,
+      0 18px 38px rgba(44, 62, 122, 0.18),
+      0 0 0 1px rgba(44, 62, 122, 0.3);
+  }
+}
+
+.character-card.affiliation-demon-card {
+  border-top-color: var(--ds-pink);
+  .character-img {
+    background:
+      radial-gradient(
+        circle at 50% 25%,
+        rgba(232, 99, 140, 0.15) 0%,
+        transparent 65%
+      ),
+      linear-gradient(180deg, #fdf0f5 0%, #fff5f8 100%);
+  }
+  &:hover {
+    border-color: var(--ds-pink);
+    box-shadow:
+      0 2px 0 rgba(255, 255, 255, 0.9) inset,
+      0 18px 38px rgba(232, 99, 140, 0.18),
+      0 0 0 1px rgba(232, 99, 140, 0.3);
+  }
+}
+
+.character-card.affiliation-unknown-card {
+  border-top-color: var(--ds-gold);
+  .character-img {
+    background:
+      radial-gradient(
+        circle at 50% 25%,
+        rgba(232, 160, 32, 0.12) 0%,
+        transparent 65%
+      ),
+      linear-gradient(180deg, #fdf8ee 0%, #fffcf4 100%);
+  }
+  &:hover {
+    border-color: var(--ds-gold);
+    box-shadow:
+      0 2px 0 rgba(255, 255, 255, 0.9) inset,
+      0 18px 38px rgba(232, 160, 32, 0.18),
+      0 0 0 1px rgba(232, 160, 32, 0.3);
+  }
+}
+
+/* ─── IMAGEM ─────────────────────────────────── */
 .character-img {
   width: 100%;
   height: 260px;
   display: block;
   object-fit: contain;
-  padding: 18px;
-
-  /* fundo com “energia” (some com o cemitério) */
+  padding: 20px 24px 0;
   background:
     radial-gradient(
-      140px 140px at 30% 20%,
-      rgba(45, 212, 191, 0.22),
-      transparent 60%
-    ),
-    radial-gradient(
-      140px 140px at 70% 30%,
-      rgba(251, 113, 133, 0.18),
-      transparent 60%
-    ),
-    radial-gradient(
-      180px 160px at 50% 90%,
-      rgba(167, 139, 250, 0.16),
+      circle at 50% 25%,
+      rgba(244, 117, 33, 0.1) 0%,
       transparent 65%
     ),
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.08),
-      rgba(255, 255, 255, 0.03)
-    );
+    linear-gradient(180deg, #fdf4ec 0%, #fdfaf6 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+  transition: filter 0.3s ease;
 
-  /* glow na arte */
-  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.35))
-    drop-shadow(0 0 18px rgba(45, 212, 191, 0.15))
-    drop-shadow(0 0 18px rgba(244, 117, 33, 0.1));
+  .character-card:hover & {
+    filter: brightness(1.04) saturate(1.12);
+  }
 }
 
-/* se você estiver usando <ion-img>, garante comportamento similar */
-ion-img {
-  height: 260px;
-  object-fit: contain;
+/* ─── CARD HEADER ────────────────────────────── */
+ion-card-header {
+  padding: 14px 16px 10px;
 }
 
-/* =============== Textos =============== */
-ion-card-title,
-h2 {
-  color: rgba(255, 255, 255, 0.92);
+ion-card-title {
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-title);
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+  margin-bottom: 3px;
+}
+
+ion-card-subtitle {
+  font-family: "Nunito", sans-serif;
+  font-size: 0.7rem;
   font-weight: 800;
+  color: var(--cr-orange);
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-ion-card-subtitle,
-small {
-  color: rgba(255, 255, 255, 0.62);
+/* ─── BADGE ──────────────────────────────────── */
+.affiliation-badge {
+  display: inline-block;
+  margin-top: 8px;
+  border-radius: 999px;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 3px 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.6) 50%,
+      transparent 100%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.55s ease;
+  }
+
+  .character-card:hover &::after {
+    transform: translateX(100%);
+  }
 }
 
-/* descrição cortada em 3 linhas */
+.affiliation-corps {
+  background: linear-gradient(135deg, #d1faf3 0%, #a8f0e2 100%);
+  color: #0d7a6a;
+  border: 1.5px solid rgba(42, 157, 143, 0.5);
+  box-shadow: 0 2px 6px rgba(42, 157, 143, 0.2);
+}
+
+.affiliation-hashira {
+  background: linear-gradient(135deg, #dce6ff 0%, #b8ccff 100%);
+  color: #1e3a8a;
+  border: 1.5px solid rgba(44, 62, 122, 0.4);
+  box-shadow: 0 2px 6px rgba(44, 62, 122, 0.15);
+}
+
+.affiliation-demon {
+  background: linear-gradient(135deg, #fce4ed 0%, #f9b8d0 100%);
+  color: #9d1853;
+  border: 1.5px solid rgba(232, 99, 140, 0.45);
+  box-shadow: 0 2px 6px rgba(232, 99, 140, 0.2);
+}
+
+.affiliation-unknown {
+  background: linear-gradient(135deg, #fef3d0 0%, #fde89a 100%);
+  color: #92570a;
+  border: 1.5px solid rgba(232, 160, 32, 0.45);
+  box-shadow: 0 2px 6px rgba(232, 160, 32, 0.2);
+}
+
+/* ─── DESCRIÇÃO ──────────────────────────────── */
+ion-card-content {
+  padding: 8px 16px 18px;
+}
+
 .desc {
-  color: rgba(255, 255, 255, 0.7);
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.83rem;
+  line-height: 1.55;
+  color: var(--text-body);
 }
 
-/* quote mais “anime” */
-.quote {
-  font-size: 0.85rem;
-  opacity: 0.75;
-  margin-bottom: 10px;
-  font-style: italic;
-  color: rgba(255, 255, 255, 0.72);
+/* ─── LOADING ────────────────────────────────── */
+ion-spinner {
+  color: var(--cr-orange);
+  width: 48px;
+  height: 48px;
 }
 
-/* =============== Badge (Crunchyroll vibe) =============== */
-ion-badge {
-  --background: linear-gradient(
-    90deg,
-    rgba(244, 117, 33, 0.95),
-    rgba(251, 113, 133, 0.9)
-  );
-  --color: #0b0f14;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 8px 18px rgba(244, 117, 33, 0.2);
-}
-
-/* =============== Espaçamento do grid (se estiver usando) =============== */
-ion-col {
-  padding: 10px;
-}
-
-/* ========================================
-   🌸 BACKGROUND DA PÁGINA
-======================================== */
-
-ion-content {
-  --background: linear-gradient(180deg, #fafafa 0%, #f3f4f7 40%, #eceef3 100%);
-}
-
-/* ========================================
-   🔥 TOOLBAR ESTILO DEMON SLAYER
-======================================== */
-
-ion-toolbar {
-  --background: linear-gradient(90deg, #ff6b00, #ff8c42);
-  --color: #ffffff;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-/* ========================================
-   🎴 CARD BASE
-======================================== */
-
-.character-card {
-  overflow: hidden;
-  border-radius: 18px;
-  background: #ffffff;
-
-  transition: all 0.25s ease;
-
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-
-  &:hover {
-    transform: translateY(-6px) scale(1.01);
-    box-shadow:
-      0 10px 22px rgba(0, 0, 0, 0.12),
-      0 0 12px rgba(255, 107, 0, 0.15);
-  }
-}
-
-/* ========================================
-   🖼️ IMAGEM DO PERSONAGEM
-======================================== */
-
-.character-img {
-  width: 100%;
-  height: 260px;
-  display: block;
-
-  object-fit: contain;
-
-  /* 🌸 fundo anime claro elegante */
-  background:
-    radial-gradient(circle at top, rgba(255, 107, 0, 0.08), transparent 70%),
-    linear-gradient(180deg, #ffffff 0%, #f5f6fa 100%);
-
-  padding: 16px;
-}
-
-/* ========================================
-   ✨ HEADER DO CARD
-======================================== */
-
-ion-card-header {
-  padding-bottom: 6px;
-}
-
-ion-card-title {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: #1e1e1e;
-}
-
-ion-card-subtitle {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #ff6b00; /* 🔥 toque Crunchyroll */
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-}
-
-/* ========================================
-   📄 DESCRIÇÃO
-======================================== */
-
-.desc {
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* limita em 3 linhas */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-
-  font-size: 0.88rem;
-  line-height: 1.4;
-  color: #555;
-}
-
-/* ========================================
-   🗨️ QUOTE (se usar depois)
-======================================== */
-
-.quote {
-  font-size: 0.82rem;
-  opacity: 0.8;
-  margin-top: 8px;
-  font-style: italic;
-  color: #666;
-}
-
-/* ========================================
-   📱 RESPONSIVIDADE
-======================================== */
-
+/* ─── RESPONSIVIDADE ─────────────────────────── */
 @media (max-width: 768px) {
   .character-img {
     height: 220px;
   }
 }
-
 @media (min-width: 1200px) {
   .character-img {
-    height: 280px;
+    height: 290px;
   }
 }
 
-/* Badge base */
-.affiliation-badge {
-  margin-top: 6px;
-  border-radius: 999px;
-  font-size: 0.7rem;
-  padding: 4px 10px;
-  font-weight: 600;
-  letter-spacing: 0.4px;
+/* ─── SCROLLBAR ──────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
 }
-
-/* 🟢 Demon Slayer Corps — verde jade */
-.affiliation-corps {
-  background: rgba(34, 197, 94, 0.12);
-  color: #16a34a;
-  border: 1px solid rgba(34, 197, 94, 0.35);
+::-webkit-scrollbar-track {
+  background: var(--washi);
 }
-
-/* 🔵 Hashira — azul água */
-.affiliation-hashira {
-  background: rgba(59, 130, 246, 0.12);
-  color: #2563eb;
-  border: 1px solid rgba(59, 130, 246, 0.35);
-}
-
-/* 🔴 Demon — vermelho nichirin */
-.affiliation-demon {
-  background: rgba(239, 68, 68, 0.12);
-  color: #dc2626;
-  border: 1px solid rgba(239, 68, 68, 0.35);
-}
-
-/* ⚪ Unknown */
-.affiliation-unknown {
-  background: rgba(148, 163, 184, 0.12);
-  color: #64748b;
-  border: 1px solid rgba(148, 163, 184, 0.35);
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--cr-orange), var(--ds-teal));
+  border-radius: 99px;
 }
