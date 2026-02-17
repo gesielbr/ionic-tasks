@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
@@ -8,7 +9,7 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class CharactersService {
-  private readonly baseUrl = '/ds-api/api/v1/characters';
+  private readonly baseUrl = `${environment.dsApiBase}/api/v1/characters`;
 
   constructor(private http: HttpClient) {}
 
