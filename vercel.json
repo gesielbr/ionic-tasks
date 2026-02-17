@@ -1,6 +1,8 @@
 {
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/(.*)", "destination": "/" }
+    {
+      "source": "/api/ds/:path*",
+      "destination": "https://www.demonslayer-api.com/:path*"
+    }
   ]
 }
