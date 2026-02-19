@@ -1,20 +1,15 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="home-hero">
+  <div class="hero-overlay">
+    <h1 class="title">Demon Slayer Universe</h1>
+    <p class="subtitle">Explore some characters and discover their powers</p>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <ion-button
+      routerLink="/characters"
+      size="large"
+      shape="round"
+      class="see-more-btn"
+    >
+      See More
+    </ion-button>
   </div>
 </ion-content>
