@@ -13,8 +13,6 @@ export class CharactersService {
   private readonly baseUrl = `${environment.dsApiBase}/api/v1/characters`;
 
   private http = inject(HttpClient);
-
-  // 1. Refatoração do getCharacters usando HttpParams
   getCharacters(
     page = 1,
     limit = 6,
@@ -28,7 +26,6 @@ export class CharactersService {
     });
   }
 
-  // 3. Simplificação do searchCharacterByName
   searchCharacterByName(
     name: string,
   ): Observable<PagedResponse<DemonSlayerCharacter>> {
@@ -40,15 +37,8 @@ export class CharactersService {
   }
 
   getCharacterById(id: number): Observable<DemonSlayerCharacter> {
-    // 1. Criamos o parâmetro de busca ?id=X
     const params = new HttpParams().set('id', id);
 
-    console.log('--- AGORA VAI! ---');
-    console.log('URL Base:', this.baseUrl);
-    console.log('Buscando com parâmetro ID:', id);
-
-    // 2. Chamamos a baseUrl (sem a barra e o ID no final) passando os params
-    // O Angular vai montar: /api/ds/api/v1/characters?id=1
     console.log(params);
     return this.http.get<DemonSlayerCharacter>(this.baseUrl, { params });
   }

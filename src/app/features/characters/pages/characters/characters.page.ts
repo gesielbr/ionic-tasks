@@ -81,14 +81,14 @@ export class CharactersPage implements OnInit {
   }
 
   loadCharacters(reset = false, infiniteEv?: InfiniteScrollCustomEvent) {
-    if (this.initialLoading() || this.loadingMore) return; // Note que initialLoading agora é uma função ()
+    if (this.initialLoading() || this.loadingMore) return;
 
     if (reset) {
       this.page = 1;
-      this.characters.set([]); // Limpa o "balde com sensor"
+      this.characters.set([]);
       this.errorMsg = '';
       this.infiniteDisabled = false;
-      this.initialLoading.set(true); // Liga o sensor de carregamento
+      this.initialLoading.set(true);
     } else {
       this.loadingMore = true;
     }

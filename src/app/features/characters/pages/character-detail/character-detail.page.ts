@@ -48,10 +48,8 @@ export class CharacterDetailPage implements OnInit {
       this.charactersService.getCharacterById(Number(id)).subscribe({
         next: (res: any) => {
           const charData = res.content ? res.content[0] : res;
-          console.log('DADOS DO PERSONAGEM:', charData); // <--- OLHE AQUI NO CONSOLE
           this.character.set(charData);
 
-          // Busca o Estilo de Combate (usando o ID do personagem ou um campo específico se existir)
           if (charData) {
             this.charactersService.getCombatStyleById(charData.id).subscribe({
               next: (styleRes: any) => {
@@ -97,13 +95,6 @@ export class CharacterDetailPage implements OnInit {
   }
 
   getArcName(id: number | undefined): string {
-    // Debug temporário para você ver o que está chegando
-    if (id === undefined) {
-      console.warn('getArcName recebeu undefined!');
-    } else {
-      console.log('getArcName recebeu o ID:', id);
-    }
-
     if (!id) return 'Unknown Arc';
 
     const arcs: Record<number, string> = {
