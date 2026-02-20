@@ -239,6 +239,41 @@ Build a production-ready character browser demonstrating:
 ![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6?style=flat-square&logo=typescript)
 ![Architecture](https://img.shields.io/badge/Arquitetura-Feature--based-green?style=flat-square)
 
+## 🚀 Modern Angular Evolution: Performance & Reactivity
+
+In the latest sprint of the **Demon Slayer Project**, I performed a deep architectural refactor to leverage the cutting-edge features of **Angular 17/18/19**. The goal was to transform a standard SPA into a high-performance reactive application.
+
+### 🛠 Technical Enhancements
+
+#### Transition to Angular Signals
+
+I replaced traditional change detection triggers with **Angular Signals**.
+
+- **The Result:** A drastic improvement in rendering performance. By using "reactive primitives," the framework now knows exactly which part of the DOM needs to change, eliminating unnecessary global checks.
+- **Implementation:** Migrated `characters` and `loading` states to `signal<T>` and `update()` patterns.
+
+#### Native Control Flow (@if / @for)
+
+Goodbye `*ngIf` and `*ngFor`. I implemented the new **Built-in Control Flow**.
+
+- **Why it matters:** This native syntax is optimized at compile-time, resulting in faster execution and significantly cleaner templates.
+- **Smart Tracking:** Leveraging `track item.id` within `@for` blocks to ensure the DOM only updates the specific elements that changed during infinite scrolling.
+
+#### Modern Dependency Injection (DI)
+
+I moved away from bulky constructor-based injection to the **`inject()` function**.
+
+- **Benefit:** Cleaner class signatures, better type inference, and a more streamlined approach to handling services in Standalone Components.
+
+#### Robust API Communication
+
+- **Type Safety:** Implemented **Generics (`<T>`)** for API responses, ensuring full type-safety across the data layer.
+- **URL Security:** Switched to **`HttpParams`** for all query strings to ensure proper URL encoding and prevent security vulnerabilities.
+
+---
+
+_Developed with a focus on "Zero-Jank" performance and clean architecture._ ⚔️
+
 ---
 
 ## 📌 Visão Geral

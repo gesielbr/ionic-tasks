@@ -17,4 +17,11 @@ export const routes: Routes = [
         (m) => m.CHARACTERS_ROUTES,
       ),
   },
+  {
+    path: 'character-detail',
+    loadComponent: () =>
+      import('./features/characters/pages/character-detail/character-detail.page').then(
+        (m) => m.CharacterDetailPage,
+      ),
+  },
 ];

@@ -1,0 +1,62 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/characters" text="Back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ character()?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="transparent-content">
+  @if (loading()) {
+  <div class="flex-center">
+    <ion-spinner name="crescent" color="danger"></ion-spinner>
+  </div>
+  } @else if (character()) {
+
+  <div class="background-container">
+    <img [src]="character()?.img" [alt]="character()?.name" class="main-img" />
+  </div>
+
+  <div class="info-card">
+    <div class="badge-stack">
+      <ion-badge class="race-badge">{{ character()?.race }}</ion-badge>
+    </div>
+
+    <h1 class="char-name">{{ character()?.name }}</h1>
+    <p class="quote"><em>"{{ character()?.quote }}"</em></p>
+
+    <div class="stat-grid">
+      <div class="stat-box">
+        <small>Age</small>
+        <p>{{ character()?.age }} years</p>
+      </div>
+      <div class="stat-box">
+        <small>Gender</small>
+        <p>{{ character()?.gender }}</p>
+      </div>
+      <div class="stat-box full-width">
+        <small>Introduction Arc</small>
+        <p>{{ character()?.first_arc_appearance?.name || 'Unknown Arc' }}</p>
+      </div>
+    </div>
+
+    <div class="description-section">
+      <h3>Story</h3>
+      <p>{{ character()?.description }}</p>
+    </div>
+
+    @if (combatStyle()) {
+    <div class="combat-section">
+      <h3>Combat Style</h3>
+      <div class="combat-card">
+        <div class="combat-info">
+          <h4>{{ combatStyle()?.name }}</h4>
+          <p>{{ combatStyle()?.description }}</p>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  }
+</ion-content>

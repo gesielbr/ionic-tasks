@@ -1,5 +1,13 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { InfiniteScrollCustomEvent } from '@ionic/angular';
+import { CharactersService } from './data/characters-api.service';
+import {
+  DemonSlayerCharacter,
+  PagedResponse,
+} from './models/anime-character.model';
+import { Router } from '@angular/router';
+
 import {
   IonHeader,
   IonToolbar,
@@ -19,13 +27,6 @@ import {
   IonInfiniteScrollContent,
   IonImg,
 } from '@ionic/angular/standalone';
-import { InfiniteScrollCustomEvent } from '@ionic/angular';
-
-import { CharactersService } from './data/characters-api.service';
-import {
-  DemonSlayerCharacter,
-  PagedResponse,
-} from './models/anime-character.model';
 
 @Component({
   selector: 'app-characters',
@@ -55,16 +56,12 @@ import {
 })
 export class CharactersPage implements OnInit {
   private charactersService = inject(CharactersService);
+  private router = inject(Router);
 
-  // 1. Troque: characters: DemonSlayerCharacter[] = [];
-  // Por:
   public characters = signal<DemonSlayerCharacter[]>([]);
 
-  // 2. Troque: initialLoading = false;
-  // Por:
   public initialLoading = signal(false);
 
-  // Mantenha os outros como estão por enquanto para irmos um por vez
   page = 1;
   limit = 6;
   loadingMore = false;
@@ -98,12 +95,8 @@ export class CharactersPage implements OnInit {
 
     this.charactersService.getCharacters(this.page, this.limit).subscribe({
       next: (res: PagedResponse<DemonSlayerCharacter>) => {
-        // AQUI ESTÁ O AJUSTE DA GAVETA:
-        // Pegamos o que está em 'content' conforme a sua interface
         const list = res.content;
 
-        // AQUI ESTÁ O AJUSTE DO SIGNAL:
-        // Usamos .update para manter o que já tinha e somar os novos (importante para o scroll infinito)
         this.characters.update((current) => [...current, ...list]);
 
         this.page += 1;
@@ -112,7 +105,7 @@ export class CharactersPage implements OnInit {
           this.infiniteDisabled = true;
         }
       },
-      // ... resto do seu error e complete ...
+
       error: () => {
         this.errorMsg = 'Falha ao carregar personagens.';
         this.initialLoading.set(false);
@@ -168,5 +161,9 @@ export class CharactersPage implements OnInit {
       default:
         return 'affiliation-unknown-card';
     }
+  }
+
+  goToDetails(id: number) {
+    this.router.navigate(['/characters', id]);
   }
 }

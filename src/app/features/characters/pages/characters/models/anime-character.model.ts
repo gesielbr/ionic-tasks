@@ -9,6 +9,10 @@ export interface DemonSlayerCharacter {
   affiliation_id: number;
   arc_id: number;
   quote: string;
+  first_arc_appearance?: {
+    name: string;
+    description: string;
+  };
 }
 
 export interface Pagination {

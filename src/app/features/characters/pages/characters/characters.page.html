@@ -16,7 +16,12 @@
     <ion-row>
       @for (c of characters(); track c.id) {
       <ion-col size="12" size-md="4" size-lg="4">
-        <ion-card class="character-card" [ngClass]="getAffiliationCardClass(c)">
+        <ion-card
+          button="true"
+          class="character-card"
+          [ngClass]="getAffiliationCardClass(c)"
+          (click)="goToDetails(c.id)"
+        >
           <ion-img class="character-img" [src]="c.img" [alt]="c.name"></ion-img>
 
           <ion-card-header>

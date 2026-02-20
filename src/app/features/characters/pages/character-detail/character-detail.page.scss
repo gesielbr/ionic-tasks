@@ -1,0 +1,238 @@
+:host {
+  --detail-bg: #121212;
+  --accent-color: #e63946;
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --corps-color: #4a90e2;
+  --hashira-color: #f5a623;
+  --demon-color: #9013fe;
+}
+
+.transparent-content {
+  --background: var(--detail-bg);
+}
+
+ion-header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+
+  ion-toolbar {
+    --background: transparent;
+    --color: white;
+    --border-style: none;
+
+    ion-title {
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+.background-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60vh;
+  z-index: 0;
+  background-color: #000;
+
+  .main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    filter: brightness(0.7);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background: linear-gradient(to top, var(--detail-bg) 15%, transparent);
+    z-index: 1;
+  }
+}
+
+.info-card {
+  position: relative;
+  margin-top: 50vh;
+  background: var(--detail-bg);
+  border-radius: 40px 40px 0 0;
+  padding: 35px 25px;
+  color: var(--text-primary);
+  z-index: 2;
+  box-shadow: 0 -15px 35px rgba(0, 0, 0, 0.5);
+
+  .badge-stack {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    ion-badge {
+      padding: 8px 14px;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      font-weight: 800;
+      border-radius: 12px;
+    }
+  }
+
+  .race-badge {
+    --background: var(--accent-color);
+  }
+  .affiliation-corps {
+    --background: var(--corps-color);
+  }
+  .affiliation-hashira {
+    --background: var(--hashira-color);
+  }
+  .affiliation-demon {
+    --background: var(--demon-color);
+  }
+
+  .char-name {
+    font-size: 2.6rem;
+    font-weight: 900;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .quote {
+    color: var(--text-secondary);
+    border-left: 4px solid var(--accent-color);
+    padding-left: 20px;
+    margin: 30px 0;
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 30px 0;
+
+    .full-width {
+      grid-column: span 2;
+      border: 1px solid rgba(230, 57, 70, 0.3);
+
+      p {
+        color: var(--accent-color);
+        font-size: 1.25rem;
+      }
+    }
+  }
+
+  .stat-box {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid #333;
+    text-align: center;
+
+    small {
+      color: var(--accent-color);
+      text-transform: uppercase;
+      font-weight: 800;
+      font-size: 0.7rem;
+      display: block;
+      margin-bottom: 6px;
+    }
+    p {
+      color: var(--accent-color); // Cor vermelha da Nezuko/Tanjiro
+      font-size: 1.2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+  }
+
+  .description-section {
+    margin-top: 40px;
+    h3 {
+      font-size: 1.6rem;
+      color: var(--accent-color);
+      margin-bottom: 15px;
+      font-weight: 800;
+      border-bottom: 1px solid #333;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+    p {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      text-align: justify;
+      font-size: 1.05rem;
+    }
+  }
+}
+
+.combat-section {
+  margin-top: 40px;
+  h3 {
+    font-size: 1.6rem;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    font-weight: 800;
+  }
+  .combat-card {
+    background: linear-gradient(145deg, #222, #121212);
+    border: 1px solid rgba(230, 57, 70, 0.4);
+    border-radius: 24px;
+    padding: 25px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+
+    h4 {
+      margin: 0 0 10px 0;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      font-size: 1.3rem;
+      letter-spacing: 1px;
+    }
+    p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+  }
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.affiliation-section {
+  margin-top: 25px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  border: 1px dashed #333;
+
+  h3 {
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  .affiliation-desc {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    font-style: italic;
+  }
+}
