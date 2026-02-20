@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonHeader,
@@ -54,18 +54,22 @@ import {
   styleUrls: ['./characters.page.scss'],
 })
 export class CharactersPage implements OnInit {
-  characters: DemonSlayerCharacter[] = [];
+  private charactersService = inject(CharactersService);
 
+  // 1. Troque: characters: DemonSlayerCharacter[] = [];
+  // Por:
+  public characters = signal<DemonSlayerCharacter[]>([]);
+
+  // 2. Troque: initialLoading = false;
+  // Por:
+  public initialLoading = signal(false);
+
+  // Mantenha os outros como estão por enquanto para irmos um por vez
   page = 1;
   limit = 6;
-
-  initialLoading = false;
   loadingMore = false;
   infiniteDisabled = false;
-
   errorMsg = '';
-
-  constructor(private charactersService: CharactersService) {}
 
   ngOnInit() {
     this.loadCharacters(true);
@@ -80,46 +84,43 @@ export class CharactersPage implements OnInit {
   }
 
   loadCharacters(reset = false, infiniteEv?: InfiniteScrollCustomEvent) {
-    if (this.initialLoading || this.loadingMore) return;
+    if (this.initialLoading() || this.loadingMore) return; // Note que initialLoading agora é uma função ()
 
     if (reset) {
       this.page = 1;
-      this.characters = [];
+      this.characters.set([]); // Limpa o "balde com sensor"
       this.errorMsg = '';
       this.infiniteDisabled = false;
-      this.initialLoading = true;
+      this.initialLoading.set(true); // Liga o sensor de carregamento
     } else {
       this.loadingMore = true;
     }
 
     this.charactersService.getCharacters(this.page, this.limit).subscribe({
       next: (res: PagedResponse<DemonSlayerCharacter>) => {
-        if (!res || !Array.isArray(res.content)) {
-          this.errorMsg = 'Resposta inválida da API (não veio JSON esperado).';
-          this.initialLoading = false;
-          this.loadingMore = false;
-          infiniteEv?.target?.complete?.();
-          return;
-        }
-
+        // AQUI ESTÁ O AJUSTE DA GAVETA:
+        // Pegamos o que está em 'content' conforme a sua interface
         const list = res.content;
 
-        this.characters = [...this.characters, ...list];
+        // AQUI ESTÁ O AJUSTE DO SIGNAL:
+        // Usamos .update para manter o que já tinha e somar os novos (importante para o scroll infinito)
+        this.characters.update((current) => [...current, ...list]);
+
         this.page += 1;
 
         if (list.length === 0 || list.length < this.limit) {
           this.infiniteDisabled = true;
         }
       },
-
+      // ... resto do seu error e complete ...
       error: () => {
-        this.errorMsg = 'Falha ao carregar personagens. Tenta novamente.';
-        this.initialLoading = false;
+        this.errorMsg = 'Falha ao carregar personagens.';
+        this.initialLoading.set(false);
         this.loadingMore = false;
         infiniteEv?.target?.complete?.();
       },
       complete: () => {
-        this.initialLoading = false;
+        this.initialLoading.set(false);
         this.loadingMore = false;
         infiniteEv?.target?.complete?.();
       },

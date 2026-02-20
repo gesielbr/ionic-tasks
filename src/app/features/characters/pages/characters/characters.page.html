@@ -5,16 +5,16 @@
 </ion-header>
 
 <ion-content>
-  @if (initialLoading && characters.length === 0) {
+  @if (initialLoading() && characters().length === 0) {
   <div class="ion-text-center ion-padding">
     <ion-spinner name="crescent"></ion-spinner>
   </div>
   } @if (errorMsg) {
   <div class="ion-text-center ion-padding">{{ errorMsg }}</div>
-  } @if (characters.length > 0) {
+  } @if (characters().length > 0) {
   <ion-grid>
     <ion-row>
-      @for (c of characters; track c.id) {
+      @for (c of characters(); track c.id) {
       <ion-col size="12" size-md="4" size-lg="4">
         <ion-card class="character-card" [ngClass]="getAffiliationCardClass(c)">
           <ion-img class="character-img" [src]="c.img" [alt]="c.name"></ion-img>

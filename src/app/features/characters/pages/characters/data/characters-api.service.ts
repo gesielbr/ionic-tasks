@@ -1,4 +1,4 @@
-import { Injectable, Component, OnInit, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -9,34 +9,42 @@ import {
 } from '../models/anime-character.model';
 
 @Injectable({ providedIn: 'root' })
-export class CharactersService implements OnInit {
+export class CharactersService {
   private readonly baseUrl = `${environment.dsApiBase}/api/v1/characters`;
 
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
 
-  ngOnInit() {
-    // Vamos deixar o ngOnInit pronto, mas ainda não vamos chamar o método
-  }
-
-  getCharacters(page = 1, limit = 6) {
-    return this.http.get<PagedResponse<DemonSlayerCharacter>>(
-      `${environment.dsApiBase}/api/v1/characters?page=${page}&limit=${limit}`,
-    );
-  }
-
-  getCharacterById(
-    id: number,
+  // 1. Refatoração do getCharacters usando HttpParams
+  getCharacters(
+    page = 1,
+    limit = 6,
   ): Observable<PagedResponse<DemonSlayerCharacter>> {
-    const params = new HttpParams().set('id', String(id));
+    const params = new HttpParams()
+      .set('page', String(page))
+      .set('limit', String(limit));
+
     return this.http.get<PagedResponse<DemonSlayerCharacter>>(this.baseUrl, {
       params,
     });
   }
 
+  // 2. Simplificação do getCharacterById
+  getCharacterById(
+    id: number,
+  ): Observable<PagedResponse<DemonSlayerCharacter>> {
+    const params = new HttpParams().set('id', String(id));
+
+    return this.http.get<PagedResponse<DemonSlayerCharacter>>(this.baseUrl, {
+      params,
+    });
+  }
+
+  // 3. Simplificação do searchCharacterByName
   searchCharacterByName(
     name: string,
   ): Observable<PagedResponse<DemonSlayerCharacter>> {
     const params = new HttpParams().set('name', name);
+
     return this.http.get<PagedResponse<DemonSlayerCharacter>>(this.baseUrl, {
       params,
     });
