@@ -42,7 +42,6 @@
   --border-radius: 30px;
 }
 
-// Mobile: posiciona a imagem no topo para mostrar os rostos
 @media (max-width: 767px) {
   .home-hero {
     background-position: center top;
@@ -55,19 +54,17 @@
   }
 
   .title {
-    font-size: 1.2rem;
-    opacity: 0.65; // ajuste entre 0.5 e 0.9 ao seu gosto
-    // display: none;
+    font-size: 1.3rem;
+    opacity: 0.65;
     margin: 0;
   }
 
   .subtitle {
-    opacity: 0.65; // subtitle um pouco mais transparente que o título
-    // display: none;
+    opacity: 0.65;
     margin: 0.5rem 0;
   }
 
   .see-more-btn {
-    opacity: 0.75; // botão quase opaco para manter o clique chamativo
+    opacity: 0.75;
   }
 }
