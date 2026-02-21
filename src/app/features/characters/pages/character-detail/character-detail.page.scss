@@ -1,8 +1,10 @@
 :host {
   --detail-bg: #121212;
+  --card-bg: #1a1a2e;
   --accent-color: #e63946;
+  --accent-soft: rgba(230, 57, 70, 0.15);
   --text-primary: #ffffff;
-  --text-secondary: #b0b0b0;
+  --text-secondary: #a0a0b0;
   --corps-color: #4a90e2;
   --hashira-color: #f5a623;
   --demon-color: #9013fe;
@@ -31,6 +33,7 @@ ion-header {
   }
 }
 
+// ─── MOBILE: imagem full-width no topo ───────────────────────────────────────
 .background-container {
   position: absolute;
   top: 0;
@@ -45,7 +48,7 @@ ion-header {
     height: 100%;
     object-fit: cover;
     object-position: center 20%;
-    filter: brightness(0.7);
+    filter: brightness(0.75);
   }
 
   &::after {
@@ -60,15 +63,17 @@ ion-header {
   }
 }
 
+// ─── INFO CARD ────────────────────────────────────────────────────────────────
 .info-card {
   position: relative;
   margin-top: 50vh;
-  background: var(--detail-bg);
+  background: var(--card-bg);
   border-radius: 40px 40px 0 0;
   padding: 35px 25px;
   color: var(--text-primary);
   z-index: 2;
-  box-shadow: 0 -15px 35px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 -15px 35px rgba(0, 0, 0, 0.6);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 
   .badge-stack {
     display: flex;
@@ -102,111 +107,128 @@ ion-header {
     font-weight: 900;
     margin: 0;
     line-height: 1;
+    color: var(--text-primary);
   }
 
   .quote {
     color: var(--text-secondary);
-    border-left: 4px solid var(--accent-color);
-    padding-left: 20px;
-    margin: 30px 0;
-    font-size: 1.15rem;
+    border-left: 3px solid var(--accent-color);
+    padding-left: 16px;
+    margin: 28px 0;
+    font-size: 1rem;
     font-style: italic;
-    line-height: 1.5;
+    line-height: 1.6;
+    opacity: 0.85;
   }
 
+  // ─── STAT GRID ──────────────────────────────────────────────────────────────
   .stat-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin: 30px 0;
+    gap: 12px;
+    margin: 28px 0;
 
     .full-width {
       grid-column: span 2;
-      border: 1px solid rgba(230, 57, 70, 0.3);
+      border: 1px solid rgba(230, 57, 70, 0.25);
 
       p {
-        color: var(--accent-color);
-        font-size: 1.25rem;
+        color: var(--text-primary);
+        font-size: 1.15rem;
       }
     }
   }
 
   .stat-box {
-    background: #1e1e1e;
-    padding: 20px;
-    border-radius: 20px;
-    border: 1px solid #333;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     text-align: center;
+    transition: background 0.2s;
 
     small {
       color: var(--accent-color);
       text-transform: uppercase;
-      font-weight: 800;
-      font-size: 0.7rem;
+      font-weight: 700;
+      font-size: 0.65rem;
+      letter-spacing: 1px;
       display: block;
       margin-bottom: 6px;
     }
+
     p {
-      color: var(--accent-color); // Cor vermelha da Nezuko/Tanjiro
-      font-size: 1.2rem;
-      font-weight: 800;
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-top: 4px;
     }
   }
 
+  // ─── DESCRIPTION ────────────────────────────────────────────────────────────
   .description-section {
-    margin-top: 40px;
+    margin-top: 36px;
+
     h3 {
-      font-size: 1.6rem;
-      color: var(--accent-color);
-      margin-bottom: 15px;
+      font-size: 1.4rem;
+      color: var(--text-primary);
+      margin-bottom: 12px;
       font-weight: 800;
-      border-bottom: 1px solid #333;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--accent-color);
       display: inline-block;
-      padding-bottom: 5px;
     }
+
     p {
       color: var(--text-secondary);
-      line-height: 1.8;
+      line-height: 1.85;
       text-align: justify;
-      font-size: 1.05rem;
+      font-size: 1rem;
     }
   }
 }
 
+// ─── COMBAT SECTION ──────────────────────────────────────────────────────────
 .combat-section {
-  margin-top: 40px;
+  margin-top: 36px;
+
   h3 {
-    font-size: 1.6rem;
-    color: var(--accent-color);
-    margin-bottom: 15px;
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    margin-bottom: 12px;
     font-weight: 800;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--accent-color);
+    display: inline-block;
   }
+
   .combat-card {
-    background: linear-gradient(145deg, #222, #121212);
-    border: 1px solid rgba(230, 57, 70, 0.4);
-    border-radius: 24px;
-    padding: 25px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(230, 57, 70, 0.3);
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 
     h4 {
       margin: 0 0 10px 0;
       color: var(--text-primary);
       text-transform: uppercase;
-      font-size: 1.3rem;
-      letter-spacing: 1px;
+      font-size: 1.2rem;
+      letter-spacing: 1.5px;
     }
+
     p {
       margin: 0;
       color: var(--text-secondary);
-      font-size: 1rem;
+      font-size: 0.95rem;
       line-height: 1.7;
     }
   }
 }
 
+// ─── MISC ─────────────────────────────────────────────────────────────────────
 .flex-center {
   display: flex;
   justify-content: center;
@@ -219,11 +241,11 @@ ion-header {
   padding: 15px;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 20px;
-  border: 1px dashed #333;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
 
   h3 {
     font-size: 1.2rem;
-    color: var(--accent-color);
+    color: var(--text-primary);
     margin-bottom: 10px;
     font-weight: 700;
   }
@@ -234,5 +256,63 @@ ion-header {
     color: var(--text-secondary);
     line-height: 1.5;
     font-style: italic;
+  }
+}
+
+// ─── DESKTOP (≥ 768px): layout lado a lado ───────────────────────────────────
+@media (min-width: 768px) {
+  .background-container {
+    width: 45%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    .main-img {
+      object-fit: contain;
+      object-position: center bottom;
+      filter: brightness(0.85);
+    }
+
+    &::after {
+      background: linear-gradient(
+        to left,
+        var(--detail-bg) 2%,
+        transparent 60%
+      );
+      height: 100%;
+      bottom: 0;
+    }
+  }
+
+  .info-card {
+    margin-top: 0;
+    margin-left: 42%;
+    border-radius: 0;
+    min-height: 100vh;
+    padding: 80px 50px 60px;
+    background: var(--card-bg);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
+
+    .char-name {
+      font-size: 3rem;
+    }
+
+    .stat-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+
+      .full-width {
+        grid-column: span 3;
+      }
+    }
+
+    .stat-grid {
+      grid-template-columns: 1fr 1fr; // mantém 2 colunas
+
+      .full-width {
+        grid-column: span 2; // continua ocupando tudo
+      }
+    }
   }
 }

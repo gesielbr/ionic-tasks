@@ -34,4 +34,11 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+body {
+  -webkit-font-smoothing: antialiased; /* Para Chrome e Safari */
+  -moz-osx-font-smoothing: grayscale; /* Para Firefox (Mozilla) */
+  text-rendering: optimizeLegibility; /* Ajudar a renderização da fonte em geral */
+  font-family: "Open Sans", sans-serif;
+}

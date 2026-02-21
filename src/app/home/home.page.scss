@@ -1,8 +1,11 @@
 .home-hero {
   --background: none;
-  background:
-    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
-    url("assets/images/hero-bg.jpg") center/cover no-repeat;
+  background: url("assets/images/hero-bg-mobile-1.jpg") top center/cover
+    no-repeat;
+  @media (min-width: 768px) {
+    background-image: url("assets/images/hero-bg.jpg");
+    background-position: center center;
+  }
 }
 
 .hero-overlay {
@@ -12,20 +15,59 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.5) 60%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+  padding: 20px;
 }
 
 .title {
   font-size: 2rem;
   font-weight: 700;
   color: #fff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
 .subtitle {
   color: #ddd;
   margin-bottom: 20px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
 }
 
 .see-more-btn {
-  --background: #dd0031; /* vermelho Angular */
+  --background: #dd0031;
   --border-radius: 30px;
+}
+
+// Mobile: posiciona a imagem no topo para mostrar os rostos
+@media (max-width: 767px) {
+  .home-hero {
+    background-position: center top;
+  }
+
+  .hero-overlay {
+    justify-content: flex-end;
+
+    padding-bottom: 1rem;
+  }
+
+  .title {
+    font-size: 1.2rem;
+    opacity: 0.65; // ajuste entre 0.5 e 0.9 ao seu gosto
+    // display: none;
+    margin: 0;
+  }
+
+  .subtitle {
+    opacity: 0.65; // subtitle um pouco mais transparente que o título
+    // display: none;
+    margin: 0.5rem 0;
+  }
+
+  .see-more-btn {
+    opacity: 0.75; // botão quase opaco para manter o clique chamativo
+  }
 }
