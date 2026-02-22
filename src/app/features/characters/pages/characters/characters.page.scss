@@ -318,6 +318,9 @@ ion-col:nth-child(9) {
 /* ─── CARD HEADER ────────────────────────────── */
 ion-card-header {
   padding: 14px 16px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 ion-card-title {
@@ -346,12 +349,15 @@ ion-card-subtitle {
   border-radius: 999px;
   font-family: "Nunito", sans-serif;
   font-size: 0.68rem;
+  line-height: 0.68;
   font-weight: 800;
-  padding: 3px 14px;
+  padding: 8px 14px;
   letter-spacing: 1px;
   text-transform: uppercase;
   position: relative;
   overflow: hidden;
+  max-width: 100%;
+  width: 100%;
 
   &::after {
     content: "";

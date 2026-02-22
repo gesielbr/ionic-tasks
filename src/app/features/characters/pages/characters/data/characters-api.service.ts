@@ -46,8 +46,6 @@ export class CharactersService {
   getCombatStyleById(id: number): Observable<any> {
     const params = new HttpParams().set('id', id);
     const url = `${environment.dsApiBase}/api/v1/combat-styles`;
-
-    console.log('Buscando Estilo de Combate para ID:', id);
     return this.http.get<any>(url, { params });
   }
 }
